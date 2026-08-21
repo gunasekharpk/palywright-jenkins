@@ -20,7 +20,7 @@ export class ProductPage {
   }
 
     async verifyProductsPage() {
-
+        console.log('Current URL:', this.page.url());
         await expect(this.productsTitle)
             .toBeVisible();
     }
