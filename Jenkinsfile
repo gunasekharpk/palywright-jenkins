@@ -27,7 +27,12 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                 bat 'npx playwright test'
+                withCredentials([
+                   string(credentialsId: 'qa-username', variable: 'TEST_USERNAME'),
+                   string(credentialsId: 'qa-password', variable: 'PASSWORD')
+                ]) {
+                   bat 'npx playwright test'
+                }
             }
         }
 
