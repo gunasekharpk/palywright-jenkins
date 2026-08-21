@@ -1,0 +1,20 @@
+[
+    {
+        "testName": "Valid Login",
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "expected": "success"
+    },
+    {
+        "testName": "Invalid Password",
+        "username": "customer1",
+        "password": "Wrong123",
+        "expected": "Invalid credentials"
+    },
+    {
+        "testName": "Invalid Username",
+        "username": "wronguser",
+        "password": "Password123",
+        "expected": "Invalid credentials"
+    }
+]
