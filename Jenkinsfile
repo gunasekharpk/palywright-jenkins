@@ -17,6 +17,12 @@ pipeline {
             choices: ['smoke', 'sanity', 'regression'],
             description: 'Select test suite'
         )
+
+          choice(
+          name: 'BROWSER',
+          choices: ['chromium', 'firefox', 'webkit'],
+          description: 'Select browser'
+        )
     }
 
     stages {
