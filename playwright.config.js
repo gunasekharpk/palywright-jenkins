@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 
 const environment = process.env.ENV || 'qa';
 const browser = process.env.BROWSER || 'chromium';
+const headless = process.env.HEADLESS !== 'false';
 
 // --------------------------------------------------
 // 2. Load environment-specific .env file
@@ -162,7 +163,7 @@ export default defineConfig({
         // Browser context settings
         // --------------------------------------------
 
-        headless: true,
+        headless: headless,
 
         // --------------------------------------------
         // Ignore HTTPS certificate errors if required

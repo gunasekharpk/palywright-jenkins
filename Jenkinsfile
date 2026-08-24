@@ -23,6 +23,12 @@ pipeline {
           choices: ['chromium', 'firefox', 'webkit'],
           description: 'Select browser'
         )
+
+          choice(
+            name: 'HEADLESS',
+            choices: ['true', 'false'],
+            description: 'Run browser in headless mode'
+        )
     }
 
     stages {
