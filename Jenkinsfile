@@ -65,7 +65,16 @@ pipeline {
                                     variable: 'PASSWORD'
                                 )
                             ]) {
-                              bat 'npx playwright test'
+                              def testCommand
+
+                              if (params.TEST_SUITE == 'smoke') {
+                                    testCommand = 'npx playwright test --grep @smoke'
+                                } else if (params.TEST_SUITE == 'sanity') {
+                                    testCommand = 'npx playwright test --grep @sanity'
+                                } else {
+                                    testCommand = 'npx playwright test'
+                                }
+                                
                             }
                         }
                     }
