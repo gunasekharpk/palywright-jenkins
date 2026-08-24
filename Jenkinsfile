@@ -53,22 +53,23 @@ pipeline {
                    def baseUrl = params.ENV == 'qa'
                     ? 'https://qa.myapp.com'
                     : 'https://uat.myapp.com'
-                    
+
                    withEnv(["BASE_URL=${baseUrl}"]) {
-                        withCredentials([
-                               string(
-                                credentialsId: usernameCredential,
-                                variable: 'TEST_USERNAME'
-                            ),
-                              string(
-                                credentialsId: passwordCredential,
-                                variable: 'PASSWORD'
-                            )
-                        ]) {
+                            withCredentials([
+                                   string(
+                                    credentialsId: usernameCredential,
+                                    variable: 'TEST_USERNAME'
+                                ),
+                                   string(
+                                    credentialsId: passwordCredential,
+                                    variable: 'PASSWORD'
+                                )
+                            ]) {
                               bat 'npx playwright test'
                             }
+                        }
                     }
-                }
+            }     
 
             post {
                 always {
