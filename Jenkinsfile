@@ -54,6 +54,19 @@ pipeline {
                     ? 'https://www.saucedemo.com'
                     : 'https://www.saucedemo.com'
 
+                   def testCommand
+
+                    if (params.TEST_SUITE == 'smoke') {
+                        testCommand = 'npx playwright test --grep @smoke'
+                    } else if (params.TEST_SUITE == 'sanity') {
+                        testCommand = 'npx playwright test --grep @sanity'
+                    } else {
+                        testCommand = 'npx playwright test'
+                    }
+                   echo "Environment: ${params.ENV}"
+                   echo "Test Suite: ${params.TEST_SUITE}"
+                   echo "Test Command: ${testCommand}"
+
                    withEnv(["BASE_URL=${baseUrl}"]) {
                             withCredentials([
                                    string(
@@ -65,16 +78,8 @@ pipeline {
                                     variable: 'PASSWORD'
                                 )
                             ]) {
-                              def testCommand
-
-                              if (params.TEST_SUITE == 'smoke') {
-                                    testCommand = 'npx playwright test --grep @smoke'
-                                } else if (params.TEST_SUITE == 'sanity') {
-                                    testCommand = 'npx playwright test --grep @sanity'
-                                } else {
-                                    testCommand = 'npx playwright test'
-                                }
-                                
+                              
+                                  bat testCommand
                             }
                         }
                     }
