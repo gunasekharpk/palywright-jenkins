@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 // --------------------------------------------------
 
 const environment = process.env.ENV || 'qa';
+const browser = process.env.BROWSER || 'chromium';
 
 // --------------------------------------------------
 // 2. Load environment-specific .env file
@@ -50,6 +51,12 @@ for (const variable of requiredVariables) {
         );
     }
 }
+
+const browserDevices = {
+    chromium: devices['Desktop Chrome'],
+    firefox: devices['Desktop Firefox'],
+    webkit: devices['Desktop Safari']
+};
 
 // --------------------------------------------------
 // 5. Playwright configuration
@@ -205,7 +212,7 @@ export default defineConfig({
             testMatch: /login\/.*\.spec\.js/,
 
             use: {
-                ...devices['Desktop Chrome']
+                ...browserDevices[browser]
             }
         },
 
@@ -221,7 +228,7 @@ export default defineConfig({
             dependencies: ['setup'],
 
             use: {
-                ...devices['Desktop Chrome'],
+                ...browserDevices[browser],
 
                 // Reuse authenticated customer session
                 storageState:
