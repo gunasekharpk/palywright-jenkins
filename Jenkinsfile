@@ -5,8 +5,18 @@ pipeline {
         skipDefaultCheckout(true)
     }
 
-    environment {
-        BASE_URL = 'https://www.saucedemo.com'
+    parameters {
+          choice(
+            name: 'ENV',
+            choices: ['qa', 'uat'],
+            description: 'Select test environment'
+        )
+
+          choice(
+            name: 'TEST_SUITE',
+            choices: ['smoke', 'sanity', 'regression'],
+            description: 'Select test suite'
+        )
     }
 
     stages {
@@ -31,13 +41,34 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                withCredentials([
-                   string(credentialsId: 'qa-username', variable: 'TEST_USERNAME'),
-                   string(credentialsId: 'qa-password', variable: 'PASSWORD')
-                ]) {
-                   bat 'npx playwright test'
+                script {
+                   def usernameCredential = params.ENV == 'qa'
+                    ? 'qa-username'
+                    : 'uat-username'
+
+                   def passwordCredential = params.ENV == 'qa'
+                    ? 'qa-password'
+                    : 'uat-password'
+
+                   def baseUrl = params.ENV == 'qa'
+                    ? 'https://qa.myapp.com'
+                    : 'https://uat.myapp.com'
+                    
+                   withEnv(["BASE_URL=${baseUrl}"]) {
+                        withCredentials([
+                               string(
+                                credentialsId: usernameCredential,
+                                variable: 'TEST_USERNAME'
+                            ),
+                              string(
+                                credentialsId: passwordCredential,
+                                variable: 'PASSWORD'
+                            )
+                        ]) {
+                              bat 'npx playwright test'
+                            }
+                    }
                 }
-            }
 
             post {
                 always {
