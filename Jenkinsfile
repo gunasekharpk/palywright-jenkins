@@ -51,8 +51,8 @@ pipeline {
                     : 'uat-password'
 
                    def baseUrl = params.ENV == 'qa'
-                    ? 'https://qa.myapp.com'
-                    : 'https://uat.myapp.com'
+                    ? 'https://www.saucedemo.com'
+                    : 'https://www.saucedemo.com'
 
                    withEnv(["BASE_URL=${baseUrl}"]) {
                             withCredentials([
