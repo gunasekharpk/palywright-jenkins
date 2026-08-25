@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/testFixtures';
 
 test('Add one more backpack to cart ', async ({ productPage }) => {
-
+    //smoke test deleted
     await productPage.navigate();
 
     await productPage.verifyProductsPage();
