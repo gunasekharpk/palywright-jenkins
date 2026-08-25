@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/testFixtures';
 
-test('Add one more backpack to cart', async ({ productPage }) => {
+test('Add one more backpack to cart @smoke', async ({ productPage }) => {
 
     await productPage.navigate();
 
